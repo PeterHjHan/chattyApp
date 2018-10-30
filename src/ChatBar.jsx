@@ -7,19 +7,23 @@ class ChatBar extends Component{
     this.state = {
       chatContent: ""
     }
-
+    this.getChatText = this.getChatText.bind(this);
   }
 
-  render() {
+  getChatText(event) {
+    event.preventDefault();
+    this.setState( 
+      {
+      chatContent: event.target.innerText,
+    })
+  }
   
-    function getChatText() {
-      
-    }
+  render() {
 
     return (
       <footer className="chatbar">
        <input className="chatbar-username" placeholder={this.props.currentUser.name} />
-        <input className="chatbar-message" placeholder="Type a message and hit ENTER" />
+        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onSubmit={this.getChatText}/>
       </footer>
     )
   }
