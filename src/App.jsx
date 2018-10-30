@@ -17,8 +17,19 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      message: sampleData,
-      name: "Ujubuhjuh",
+      "currentUser": {"name": "Bob"}, 
+      "messages": [
+        {
+          "id": 1,
+          "username": "Bob",
+          "content": "Has anyone seen my marbles?"
+        },
+        {
+          "id": 2,
+          "username": "Anonymous",
+          "content": "No, I think you lost them. You lost your marbles Bob. You lost them for good."
+        }
+      ],
       loading: true,
     }
   }
@@ -28,11 +39,13 @@ class App extends Component {
     setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
-      const newMessage = {id: 9, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.message.concat(newMessage)
+      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
+      const messages = this.state.messages.concat(newMessage)
+      // const messages = [...this.state.messages, newMessage]
+
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({message: messages})
+      this.setState({messages: messages})
     }, 3000);
   }
 
@@ -40,8 +53,8 @@ class App extends Component {
     return (
       <div>
         <NavBar/>
-        <MessageList messages = {this.state.message} />
-        <ChatBar name = {this.state.message.currentUser.name}/>
+        <MessageList messages = {this.state.messages} />
+        <ChatBar currentUser = {this.state.currentUser}/>
       </div>
     );
   }
