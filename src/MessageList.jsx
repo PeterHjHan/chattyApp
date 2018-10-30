@@ -4,17 +4,10 @@ import Message from './Message.jsx'
 class MessageList extends Component {
 
   render() {
-
     const getMessages = this.props.messages.map(msg => (
-      <div className="message">
-        return (
-          <Message />
-        )
-      </div>
-
+        <Message key={msg.id} msg={msg}/>
     ))
-  
-
+    
     return (
       <main className="messages">
         {getMessages}
