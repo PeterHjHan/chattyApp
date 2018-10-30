@@ -1,6 +1,5 @@
-//Sample Message
-
-state.messages = [
+const Messages = 
+[
   {
     type: "incomingMessage",
     content: "I won't be impressed with technology until I can download food.",
@@ -35,3 +34,5 @@ state.messages = [
     content: "Anonymous2 changed their name to NotFunny",
   },
 ]
+
+export default Messages;
