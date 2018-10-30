@@ -3,22 +3,14 @@ import React, {Component} from 'react';
 class Message extends Component {
 
   render() {
-    const message = this.props.messages;
-    //use deconstructor to shorten stuff
-
-    const getMessages = this.props.messages.map(msg => (
-      <div className="message">
-        <span className="message-username">{msg.username}</span>
-        <span className="message-content">{msg.content}</span>
-      </div>
-
-    ))
-  
-
+    const msg = this.props.messages;
+    console.log(msg);
+    
     return (
-      <main className="messages">
-        {getMessages}
-      </main>
+      <div className="message">
+        <span className="message-username">{msg[0].username}</span>
+        <span className="message-content">{msg[0].content}</span>
+      </div>
     )
   }
 }

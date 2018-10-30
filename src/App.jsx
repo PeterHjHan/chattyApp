@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import Message from './Message.jsx';
 import NavBar from './NavBar.jsx';
-import Messages from './messages.json';
+import data from './messages.json';
 
 // Tree structure is: 
 // APP 
@@ -12,15 +12,13 @@ import Messages from './messages.json';
 //     Message
 //   ChatBar
 
-//Fragment can replace div check version though
-
-//Highest Node, must contain the main state)
-
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      message: Messages
+      message: data,
+      name: "Ujubuhjuh",
+      loading: true,
     }
   }
   render() {
@@ -28,7 +26,7 @@ class App extends Component {
       <div>
         <NavBar/>
         <Message messages = {this.state.message} />
-        <ChatBar />
+        <ChatBar name = {this.state.name}/>
       </div>
     );
   }
