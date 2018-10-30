@@ -5,10 +5,16 @@ class Message extends Component {
     
     return (
       <div className="message">
+
         <span className="message-username">{this.props.msg.username}</span>
-        <span className="message-content">
-        {this.props.msg.type === "incomingNotification" ? <p></p> : this.props.msg.content}
-        </span>
+       
+        {this.props.msg.type === "incomingNotification" ? 
+        (
+          <div className="message system">{this.props.msg.content}</div>
+        ) : (
+          <span className="message-content">{this.props.msg.content}</span>
+        )}
+
       </div>
     )
   }

@@ -3,6 +3,7 @@ import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 import NavBar from './NavBar.jsx';
 import data from './messages.json';
+import sampleData from './sampleData.json'
 
 // Tree structure is: 
 // APP 
@@ -16,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      message: data,
+      message: sampleData,
       name: "Ujubuhjuh",
       loading: true,
     }
@@ -40,7 +41,7 @@ class App extends Component {
       <div>
         <NavBar/>
         <MessageList messages = {this.state.message} />
-        <ChatBar name = {this.state.name}/>
+        <ChatBar name = {this.state.message.currentUser.name}/>
       </div>
     );
   }
