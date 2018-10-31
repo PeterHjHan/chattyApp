@@ -57,11 +57,10 @@ class App extends Component {
   }
 
   onNewChat(content) {
-    const newMessage = content;
-    const messages = this.state.messages.concat(newMessage);
-    this.setState({ messages: messages })
+    const updatedMessages = this.state.messages.concat(content);
+    this.setState({ messages : updatedMessages })
   }
-
+  
   render() {
     
     if(this.state.loading){

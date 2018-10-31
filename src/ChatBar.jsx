@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 
+function randomId() {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
 class ChatBar extends Component{
 
   constructor(prop) {
     super(prop)
     this.state = {
       id: 3,
-      currentUser: "",
-      message: "",
+      username: "",
+      content: "",
     }
     this.getChatText = this.getChatText.bind(this);
     this.onSubmit = this.onSubmit.bind(this); 
@@ -15,18 +19,18 @@ class ChatBar extends Component{
 
   getChatText(event) {
     this.setState({
-      id: 4,
-      currentUser: this.props.currentUser.name,
-      message: event.target.value,
+      id: randomId(),
+      username: this.props.currentUser.name,
+      content: event.target.value,
     });
   }
 
   onSubmit(event) {
     if(event.keyCode == 13){
       this.props.onNewChat(
-        {id: this.state.id, 
-         currentUser: this.state.currentUser, 
-         message: this.state.message})
+        {id: randomId(), 
+         username: this.state.username, 
+         content: this.state.content})
       event.target.value = "";
     }
   }
