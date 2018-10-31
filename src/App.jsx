@@ -32,10 +32,18 @@ class App extends Component {
       ],
       loading: true,
     }
+
+    this.onNewChat = this.onNewChat.bind(this);
   }
+
+
 
   componentDidMount() {
     console.log("componentDidMount <App />");
+
+    setTimeout(()=> {
+      this.setState({loading:false})
+    },1000)
     setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
@@ -46,15 +54,27 @@ class App extends Component {
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages})
-    }, 3000);
+    }, 1500);
+  }
+
+  onNewChat(content) {
+      const newMessage = this.state.messages.concat(content)
+      this.setState({
+        messages: newMessage
+      })
+
   }
 
   render() {
+    
+    if(this.state.loading){
+      return <h1>Loading</h1>
+    }
     return (
       <div>
         <NavBar/>
         <MessageList messages = {this.state.messages} />
-        <ChatBar currentUser = {this.state.currentUser}/>
+        <ChatBar currentUser = {this.state.currentUser} onNewChat ={this.onNewChat}/>
       </div>
     );
   }
