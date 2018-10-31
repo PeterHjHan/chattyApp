@@ -86,4 +86,9 @@ body {
   text-decoration: none;
 }
 
+.loading {
+  font-size: 10em;
+  margin: 25%;
+}
+
 /*# sourceMappingURL=home.css.map */

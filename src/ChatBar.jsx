@@ -12,18 +12,29 @@ class ChatBar extends Component{
       id: 3,
       username: "",
       content: "",
+      error:""
     }
     this.getChatText = this.getChatText.bind(this);
     this.onSubmit = this.onSubmit.bind(this); 
   };
 
   getChatText(event) {
-    this.setState({
-      id: randomId(),
-      username: this.props.currentUser.name,
-      content: event.target.value,
-    });
+    if(event.target.value.length === 0) {
+      console.log("FAIELD")
+      this.setState({
+        error: "Please type in something"
+      })
+    } else {
+      this.setState({
+        id: randomId(),
+        username: this.props.currentUser.name,
+        content: event.target.value,
+      });
+    }
   }
+
+  //TODO: Bug where typing enter creates new same chat even though value shows nothing;
+  //TODO: Error handling
 
   onSubmit(event) {
     if(event.keyCode == 13){

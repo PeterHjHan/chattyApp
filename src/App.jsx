@@ -34,21 +34,21 @@ class App extends Component {
     this.onNewChat = this.onNewChat.bind(this);
   }
 
-
+  
 
   componentDidMount() {
     console.log("componentDidMount <App />");
 
     setTimeout(()=> {
       this.setState({loading:false})
-    },1000)
+    },500)
     setTimeout(() => {
       console.log("Simulating incoming message");
       const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
       const messages = this.state.messages.concat(newMessage)
       
       this.setState({messages: messages})
-    }, 1500);
+    }, 1000);
   }
 
   onNewChat(content) {
@@ -59,7 +59,7 @@ class App extends Component {
   render() {
     
     if(this.state.loading){
-      return <h1>Loading</h1>
+      return <h1 className="loading">Loading...</h1>
     }
     return (
       <div>
