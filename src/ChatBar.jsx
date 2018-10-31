@@ -16,14 +16,17 @@ class ChatBar extends Component{
   getChatText(event) {
     this.setState({
       id: 4,
+      currentUser: this.props.currentUser.name,
       message: event.target.value,
-      currentUser: this.props.currentUser.name
     });
   }
 
   onSubmit(event) {
     if(event.keyCode == 13){
-      this.props.onNewChat(this.state.message)
+      this.props.onNewChat(
+        {id: this.state.id, 
+         currentUser: this.state.currentUser, 
+         message: this.state.message})
       event.target.value = "";
     }
   }
