@@ -20,7 +20,6 @@ class ChatBar extends Component{
 
   getChatText(event) {
     if(event.target.value.length === 0) {
-      console.log("FAIELD")
       this.setState({
         error: "Please type in something"
       })

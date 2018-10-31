@@ -31,7 +31,8 @@ class App extends Component {
       loading: true,
     }
 
-    this.onNewChat = this.onNewChat.bind(this);
+    this.addMessage = this.addMessage.bind(this);
+    this.socket = new WebSocket("ws://localhost:3001");
   }
 
   
@@ -39,6 +40,10 @@ class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
 
+    this.socket.onopen = (event) => {
+      console.log('Connected to server')
+    }
+    
     setTimeout(()=> {
       this.setState({loading:false})
     },500)
@@ -50,14 +55,14 @@ class App extends Component {
       this.setState({messages: messages})
     }, 1000);
   }
-
-  onNewChat(content) {
+  
+  addMessage(content) {
     const updatedMessages = this.state.messages.concat(content);
     this.setState({ messages : updatedMessages })
   }
   
   render() {
-    
+
     if(this.state.loading){
       return <h1 className="loading">Loading...</h1>
     }
@@ -65,7 +70,7 @@ class App extends Component {
       <div>
         <NavBar/>
         <MessageList messages = {this.state.messages} />
-        <ChatBar currentUser = {this.state.currentUser} onNewChat ={this.onNewChat}/>
+        <ChatBar currentUser = {this.state.currentUser} onNewChat ={this.addMessage}/>
       </div>
     );
   }
