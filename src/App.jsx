@@ -15,27 +15,14 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      "currentUser": {"name": "Bob"}, 
-      "messages": [
-        {
-          "id": 1,
-          "username": "Bob",
-          "content": "Has anyone seen my marbles?"
-        },
-        {
-          "id": 2,
-          "username": "Anonymous",
-          "content": "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ],
+      currentUser: {name: "Bob"}, 
+      messages : [],
       loading: true,
     }
 
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
   }
-
-  
 
   componentDidMount() {
     console.log("componentDidMount <App />");
@@ -47,9 +34,6 @@ class App extends Component {
     setTimeout(()=> {
       this.setState({loading:false})
     },500)
-    setTimeout(() => {      
-      this.setState({messages: messages})
-    }, 1000);
   }
   
   addMessage(content) {
