@@ -1,10 +1,4 @@
 import React, {Component} from 'react';
-import { EventEmitter } from 'events';
-
-function randomId() {
-  return '_' + Math.
-  random().toString(36).substr(2, 9);
-};
 
 class ChatBar extends Component{
   constructor(prop) {
@@ -22,8 +16,6 @@ class ChatBar extends Component{
     this.onUserNameSubmit = this.onUserNameSubmit.bind(this);
   };
 
-  //TODO: Error handling
-
   getUserName(event) {
     if(event.target.value.length === 0) {
       this.setState({username})
@@ -34,7 +26,6 @@ class ChatBar extends Component{
 
   onUserNameSubmit(event) {
     if(event.keyCode == 13){
-      console.log("on NAME SUBMIT")
       if(event.target.value.length === 0) {
         this.props.onNewChat({
           username: "Mysterious",
@@ -73,6 +64,7 @@ class ChatBar extends Component{
           username: this.state.username, 
           content: this.state.content})
         event.target.value = "";
+
       }
     }
   }

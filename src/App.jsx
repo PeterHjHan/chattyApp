@@ -3,14 +3,6 @@ import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 import NavBar from './NavBar.jsx';
 
-// Tree structure is: 
-// APP 
-//   MessageBox
-//     Message
-//     Message
-//     Message
-//   ChatBar
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -19,7 +11,6 @@ class App extends Component {
       messages : [],
       loading: true,
     }
-
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
     this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
@@ -32,7 +23,6 @@ class App extends Component {
       console.log('Connected to server')
     }
     this.recieveMessageFromServer();
-    
     
     setTimeout(()=> {
       this.setState({loading:false})
@@ -53,8 +43,6 @@ class App extends Component {
         content : message
       }
 
-      console.log(data);
-
       const messageFromServer = this.state.messages.concat(data)
       this.setState({messages: messageFromServer})
     }
@@ -62,8 +50,7 @@ class App extends Component {
 
   addMessage(content) {
     const updatedMessages = this.state.messages.concat(content);
-    const user = this.state.currentUser.name
-    
+
     this.setState({messages: updatedMessages,
       user: content.username, 
     }, () => {   
@@ -81,13 +68,10 @@ class App extends Component {
           case "incomingNotification" :
             messageData.type = "postNotification"
         }
-
         this.socket.send(JSON.stringify(messageData))
     });
   }
 
-
-  
   render() {
     // this.recieveMessageFromServer()
     if(this.state.loading){
