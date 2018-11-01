@@ -22,7 +22,7 @@ class App extends Component {
 
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
-    this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
+    // this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
   }
 
   componentDidMount() {
@@ -32,28 +32,32 @@ class App extends Component {
       console.log('Connected to server')
     }
     this.socket.onmessage = (event) => {
-      console.log("received message")
-    }
-    
-    setTimeout(()=> {
-      this.setState({loading:false})
-    },500)
-  }
-  
-  recieveMessageFromServer() {
-    let message1 = this;
-    this.socket.onmessage = function(event) {
       const messageData = JSON.parse(event.data);
       const userId = messageData.id;
       const username = messageData.username;
       const message = messageData.content;
       var data = {
         id: userId,
-        // username: username,
+        username: username,
         content : message
       }
+
+      const messageFromServer = this.state.messages.concat(data)
+      this.setState({messages: messageFromServer})
     }
+    
+    
+    setTimeout(()=> {
+      this.setState({loading:false})
+    },500)
   }
+  
+  // recieveMessageFromServer() {
+  //   let message1 = this;
+  //   this.socket.onmessage = function(event) {
+
+  //   }
+  // }
 
   addMessage(content) {
 
@@ -72,7 +76,7 @@ class App extends Component {
 
   
   render() {
-    this.recieveMessageFromServer()
+    // this.recieveMessageFromServer()
     if(this.state.loading){
       return <h1 className="loading">Loading...</h1>
     }
