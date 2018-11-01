@@ -59,18 +59,19 @@ class App extends Component {
       const messageData = JSON.parse(event.data);
       const userId = messageData.id;
       const username = messageData.username;
-      const message = messageData.message;
+      const message = messageData.content;
       var data = {
         id: userId,
         username: username,
         content : message
       }
-      return data
+      console.log(data);
     }
   }
 
   
   render() {
+    this.recieveMessageFromServer()
     if(this.state.loading){
       return <h1 className="loading">Loading...</h1>
     }
