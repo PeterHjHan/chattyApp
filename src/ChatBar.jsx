@@ -25,9 +25,6 @@ class ChatBar extends Component{
   //TODO: Bug where typing enter creates new same chat even though value shows nothing;
   //TODO: Error handling
 
-
-
-
   getUserName(event) {
     if(event.target.value.length === 0) {
       this.setState({username: "Mysterious"})
@@ -70,13 +67,6 @@ class ChatBar extends Component{
     }
   }
 
-  onSubmit(event) {
-    console.log(event);
-
-  }
-
-
-  
   render() {
 
     return (
