@@ -44,17 +44,19 @@ class App extends Component {
 
     const updatedMessages = this.state.messages.concat(content);
 
-    this.setState({messages: updatedMessages}, () => {       
-      var data = {
+    this.setState({messages: updatedMessages}, () => {   
+
+      var messageData = {
         user: this.state.currentUser.name,
         message: this.state.messages[this.state.messages.length-1].content,
       }
-      this.socket.send(JSON.stringify(data))
+      console.log("ADD MESAGES", this);
+      this.socket.send(JSON.stringify(messageData))
       });
     }
-  
 
   recieveMessageFromServer() {
+    let message1 = this;
     this.socket.onmessage = function(event) {
       const messageData = JSON.parse(event.data);
       const userId = messageData.id;
@@ -62,11 +64,13 @@ class App extends Component {
       const message = messageData.content;
       var data = {
         id: userId,
-        username: username,
+        // username: username,
         content : message
       }
-      console.log(data);
+
+      message1.state.messages.concat(data.content);
     }
+    console.log(this.state.messages)
   }
 
   
