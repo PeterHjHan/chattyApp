@@ -19,19 +19,23 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount <App />");
+    this.getUserCount();
 
     this.socket.onopen = (event) => {
       console.log('Connected to server')
     }
     this.recieveMessageFromServer();
-    
     setTimeout(()=> {
       this.setState({loading:false})
     },500)
   }
 
   getUserCount() {
+    this.socket.onmessage = (event) => {
+      const messageData = JSON.parse(event.data);
+      const userCount = messageData.userCount;
 
+    }
   }
 
   recieveMessageFromServer() {
@@ -45,9 +49,9 @@ class App extends Component {
         id: userId,
         type: type,
         username: username,
-        oldUserName: this.state.currentUser.name,
         content : message
       }
+
 
       const messageFromServer = this.state.messages.concat(data)
       this.setState({messages: messageFromServer})
@@ -56,27 +60,22 @@ class App extends Component {
 
   addMessage(content) {
 
-    this.setState({
-
-    }, () => {   
-
-        var messageData = {
-          type: content.type,
-          user: content.username,
-          message: content.content,
-
-        }
-
-        switch (content.type) {
-          case "incomingMessage" :
-            messageData.type = "postChat"
-            break;
-          case "incomingNotification" :
-            messageData.type = "postNotification"
-        }
-        this.socket.send(JSON.stringify(messageData))
-    });
-  }
+    var messageData = {
+      type: content.type,
+      user: content.username,
+      oldUser: content.username,
+      message: content.content,
+    }
+    switch (content.type) {
+      case "incomingMessage" :
+        messageData.type = "postChat"
+        break;
+      case "incomingNotification" :
+        messageData.type = "postNotification"
+    }
+    this.socket.send(JSON.stringify(messageData))
+  };
+  
 
   render() {
     // this.recieveMessageFromServer()
@@ -86,7 +85,7 @@ class App extends Component {
     return (
       <div>
         <NavBar userCount = {this.getUserCount}/>
-        <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} />
+        <MessageList messages = {this.state.messages} />
         <ChatBar currentUser = {this.getUser} onNewChat ={this.addMessage} />
       </div>
     );
