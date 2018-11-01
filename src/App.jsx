@@ -48,8 +48,11 @@ class App extends Component {
         oldUserName: this.state.currentUser.name,
         content : message,
       }
-    
-      this.setState({userCount: userCount})      
+      
+      if(type === "userCount") {
+        this.setState({userCount: userCount})      
+      }
+
       const messageFromServer = this.state.messages.concat(data)
       this.setState({messages: messageFromServer})
     }
