@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {name: "BOB"}, 
+      currentUser: {name: ""}, 
       messages : [],
       loading: true,
     }
@@ -45,11 +45,15 @@ class App extends Component {
       const userId = messageData.id;
       const username = messageData.username;
       const message = messageData.content;
+      const type = messageData.type;
       var data = {
         id: userId,
+        type: type,
         username: username,
         content : message
       }
+
+      console.log(data);
 
       const messageFromServer = this.state.messages.concat(data)
       this.setState({messages: messageFromServer})
@@ -61,10 +65,19 @@ class App extends Component {
     const user = this.state.currentUser.name
     
     this.setState({messages: updatedMessages,
-      user: content.username, }, () => {   
+      user: content.username, 
+    }, () => {   
         var messageData = {
+          type: content.type,
           user: this.state.messages[this.state.messages.length-1].username,
           message: this.state.messages[this.state.messages.length-1].content,
+        }
+        switch (content.type) {
+          case "incomingMessage" :
+            messageData.type = "postChat"
+            break;
+          case "incomingNotification" :
+            messageData.type = "postNotification"
         }
         this.socket.send(JSON.stringify(messageData))
     });

@@ -13,7 +13,8 @@ class ChatBar extends Component{
       id: 3,
       username: "Annoynmous",
       content: "",
-      error:""
+      error:"",
+      type: ""
     }
     this.getChatText = this.getChatText.bind(this);
     this.onChatSubmit = this.onChatSubmit.bind(this);
@@ -36,9 +37,15 @@ class ChatBar extends Component{
   onUserNameSubmit(event) {
     if(event.keyCode == 13){
       if(event.target.value.length === 0) {
-        this.setState({username: "Mysterious"})
+        this.setState({
+          username: "Mysterious",
+          type: "incomingNotification",
+        })
       } else {
-        this.setState({username: event.target.value})
+        this.setState({
+          username: event.target.value,
+          type: "incomingNotification",
+        })
       }
     }
   }
@@ -60,7 +67,7 @@ class ChatBar extends Component{
   onChatSubmit(event) {
     if(event.keyCode == 13){
       this.props.onNewChat({
-        id: randomId(), 
+        type: "incomingMessage",
         username: this.state.username, 
         content: this.state.content})
       event.target.value = "";
@@ -71,9 +78,11 @@ class ChatBar extends Component{
 
     return (
       <footer className="chatbar">
-        <input className="chatbar-username" placeholder={this.state.username} onChange ={this.getUserName} onKeyUp = {this.onUserNameSubmit} name="username"/>
-        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange={this.getChatText}
-        onKeyUp ={this.onChatSubmit} name="chatContent"/>
+        <input className="chatbar-username" placeholder={this.state.username} 
+        onChange ={this.getUserName} onKeyUp = {this.onUserNameSubmit} name="username"/>
+        <input className="chatbar-message" placeholder="Type a message and hit ENTER" 
+        onChange={this.getChatText}
+        onKeyUp ={this.onChatSubmit} />
       </footer>
     )
   }
