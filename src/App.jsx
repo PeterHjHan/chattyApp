@@ -25,14 +25,14 @@ class App extends Component {
     this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
   }
 
-
-
-
   componentDidMount() {
     console.log("componentDidMount <App />");
 
     this.socket.onopen = (event) => {
       console.log('Connected to server')
+    }
+    this.socket.onmessage = (event) => {
+      console.log("received message")
     }
     
     setTimeout(()=> {
@@ -40,21 +40,6 @@ class App extends Component {
     },500)
   }
   
-  addMessage(content) {
-
-    const updatedMessages = this.state.messages.concat(content);
-
-    this.setState({messages: updatedMessages}, () => {   
-
-      var messageData = {
-        user: this.state.currentUser.name,
-        message: this.state.messages[this.state.messages.length-1].content,
-      }
-      console.log("ADD MESAGES", this);
-      this.socket.send(JSON.stringify(messageData))
-      });
-    }
-
   recieveMessageFromServer() {
     let message1 = this;
     this.socket.onmessage = function(event) {
@@ -67,11 +52,23 @@ class App extends Component {
         // username: username,
         content : message
       }
-
-      message1.state.messages.concat(data.content);
     }
-    console.log(this.state.messages)
   }
+
+  addMessage(content) {
+
+    const updatedMessages = this.state.messages.concat(content);
+
+    this.setState({messages: updatedMessages}, () => {   
+
+      var messageData = {
+        user: this.state.currentUser.name,
+        message: this.state.messages[this.state.messages.length-1].content,
+      }
+      this.socket.send(JSON.stringify(messageData))
+    });
+  }
+
 
   
   render() {
