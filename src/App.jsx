@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {name: "Peter"}, 
+      currentUser: "Mysterious", 
       messages : [],
       loading: true,
       userCount: 0,
@@ -46,7 +46,7 @@ class App extends Component {
         id: userId,
         type: type,
         username: username,
-        oldUserName: this.state.currentUser.name,
+        oldUserName: this.state.currentUser,
         content : message,
       }
       
@@ -59,8 +59,9 @@ class App extends Component {
     }
   }
 
-  setOldUserName() {
-
+  setOldUserName(content) {
+    const previousUserName = content.username
+    this.setState({currentUser: previousUserName})
   }
 
   addMessage(content) {
@@ -74,7 +75,8 @@ class App extends Component {
         messageData.type = "postChat"
         break;
       case "incomingNotification" :
-        messageData.type = "postNotification"
+        messageData.type = "postNotification";
+        messageData.message = `${this.state.currentUser} changed their name to ${messageData.user}`
     }
     this.socket.send(JSON.stringify(messageData))
   }
@@ -88,7 +90,7 @@ class App extends Component {
       <div>
         <NavBar userCount = {this.state.userCount}/>
         <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} 
-        userName = {this.state.currentUser.name} />
+        userName = {this.state.currentUser} />
         <ChatBar currentUser = {this.setOldUserName} onNewChat ={this.addMessage} />
       </div>
     );

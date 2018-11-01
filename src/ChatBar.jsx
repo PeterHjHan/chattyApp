@@ -17,9 +17,7 @@ class ChatBar extends Component{
   };
 
   getUserName(event) {
-    if(event.target.value.length === 0) {
-      this.setState({username})
-    } else {
+    if(event.target.value.length > 0) {
       this.setState({username: event.target.value})
     }
   }
@@ -31,10 +29,16 @@ class ChatBar extends Component{
           username: "Mysterious",
           type: "incomingNotification",
         })
+        this.props.currentUser({
+          username: "Mysterious"
+        })
       } else {
         this.props.onNewChat({
           username: event.target.value,
           type: "incomingNotification",
+        })
+        this.props.currentUser({
+          username: event.target.value,
         })
       }
     }
