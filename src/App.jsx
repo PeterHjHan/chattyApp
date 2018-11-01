@@ -47,11 +47,7 @@ class App extends Component {
     setTimeout(()=> {
       this.setState({loading:false})
     },500)
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      
+    setTimeout(() => {      
       this.setState({messages: messages})
     }, 1000);
   }
