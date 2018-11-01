@@ -86,6 +86,11 @@ body {
   text-decoration: none;
 }
 
+.users-count {
+  float: right;
+  font-size: 2em;
+}
+
 .loading {
   font-size: 10em;
   margin: 25%;

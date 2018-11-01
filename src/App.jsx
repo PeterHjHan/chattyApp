@@ -14,6 +14,7 @@ class App extends Component {
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
     this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
+    this.getUserCount = this.getUserCount.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +30,10 @@ class App extends Component {
     },500)
   }
 
+  getUserCount() {
+
+  }
+
   recieveMessageFromServer() {
     this.socket.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
@@ -40,6 +45,7 @@ class App extends Component {
         id: userId,
         type: type,
         username: username,
+        oldUserName: this.state.currentUser.name,
         content : message
       }
 
@@ -49,16 +55,16 @@ class App extends Component {
   }
 
   addMessage(content) {
-    const updatedMessages = this.state.messages.concat(content);
 
-    this.setState({messages: updatedMessages,
-      user: content.username, 
+    this.setState({
+
     }, () => {   
 
         var messageData = {
           type: content.type,
-          user: this.state.messages[this.state.messages.length-1].username,
-          message: this.state.messages[this.state.messages.length-1].content,
+          user: content.username,
+          message: content.content,
+
         }
 
         switch (content.type) {
@@ -79,7 +85,7 @@ class App extends Component {
     }
     return (
       <div>
-        <NavBar/>
+        <NavBar userCount = {this.getUserCount}/>
         <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} />
         <ChatBar currentUser = {this.getUser} onNewChat ={this.addMessage} />
       </div>
