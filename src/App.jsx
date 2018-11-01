@@ -67,20 +67,24 @@ class App extends Component {
     this.setState({messages: updatedMessages,
       user: content.username, 
     }, () => {   
-      
+
+      console.log("BEFORE", content);
+
         var messageData = {
           type: content.type,
           user: this.state.messages[this.state.messages.length-1].username,
           message: this.state.messages[this.state.messages.length-1].content,
         }
 
-        switch (content.type) {
-          case "incomingMessage" :
-            messageData.type = "postChat"
-            break;
-          case "incomingNotification" :
-            messageData.type = "postNotification"
-        }
+        console.log("AFTER", messageData);
+
+        // switch (content.type) {
+        //   case "incomingMessage" :
+        //     messageData.type = "postChat"
+        //     break;
+        //   case "incomingNotification" :
+        //     messageData.type = "postNotification"
+        // }
 
         this.socket.send(JSON.stringify(messageData))
     });
