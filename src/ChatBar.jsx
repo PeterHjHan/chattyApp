@@ -17,6 +17,7 @@ class ChatBar extends Component{
     this.getChatText = this.getChatText.bind(this);
     this.onChatSubmit = this.onChatSubmit.bind(this);
     this.getUserName = this.getUserName.bind(this); 
+    this.onSubmit = this.onSubmit.bind(this);
   };
 
   getChatText(event) {
@@ -58,21 +59,20 @@ class ChatBar extends Component{
   }
 
   onSubmit(event) {
-    console.log(event);
+
 
   }
 
-
+  
   
   render() {
 
     return (
 
-      <form onSubmit ={this.onSubmit}>
+      <form onKeyUp ={this.onSubmit}>
       <footer className="chatbar">
-        <input className="chatbar-username" placeholder={this.state.user} onChange ={this.getUserName} onKeyUp = {this.onUserNameSubmit} name="username"/>
-        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange={this.getChatText}
-        onKeyUp ={this.onChatSubmit} name="chatContent"/>
+        <input className="chatbar-username" placeholder={this.state.user} value={this.state.username} onChange = {this.onSubmit}/>
+        <input className="chatbar-message" placeholder="Type a message and hit ENTER" value = {this.state.content} onChange = {this.onSubmit}/>
       </footer>
       </form>
     )
