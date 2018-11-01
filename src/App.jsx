@@ -82,7 +82,6 @@ class App extends Component {
   }
 
   render() {
-    // this.recieveMessageFromServer()
     if(this.state.loading){
       return <h1 className="loading">Loading...</h1>
     }
