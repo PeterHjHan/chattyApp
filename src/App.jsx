@@ -23,8 +23,7 @@ class App extends Component {
     this.socket.onopen = (event) => {
       console.log('Connected to server')
     }
-    
-    
+
     this.recieveMessageFromServer();
     
     setTimeout(()=> {
@@ -48,7 +47,6 @@ class App extends Component {
         username: username,
         oldUserName: this.state.currentUser.name,
         content : message,
-        
       }
     
       this.setState({userCount: userCount})      
