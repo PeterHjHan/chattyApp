@@ -8,7 +8,7 @@ class Message extends Component {
       case 'postChat':
         return (<span className="message-content">{this.props.msg.content}</span>)
       case 'postNotification':
-        return (<span className="message-content">has changed the Name to </span>)
+        return (<span className="message-content">has changed the Name to {this.props.msg.username}</span>)
       default:
         return (<span className="message-content">{this.props.msg.content}</span>)
     }
@@ -26,7 +26,6 @@ class Message extends Component {
 
   
   render() {
-    console.log("WHAT IS THIS", this.props.msg)
     return (
       <div className="message">
         <span className="message-username">{this.props.msg.username}</span>

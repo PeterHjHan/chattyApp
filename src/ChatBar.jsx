@@ -10,7 +10,7 @@ class ChatBar extends Component{
   constructor(prop) {
     super(prop)
     this.state = {
-      id: 3,
+      id: 5,
       username: "Annoynmous",
       content: "",
       error:"",
@@ -22,8 +22,6 @@ class ChatBar extends Component{
     this.onUserNameSubmit = this.onUserNameSubmit.bind(this);
   };
 
-
-  //TODO: Bug where typing enter creates new same chat even though value shows nothing;
   //TODO: Error handling
 
   getUserName(event) {
@@ -66,13 +64,16 @@ class ChatBar extends Component{
   }
 
   onChatSubmit(event) {
-    if(event.keyCode == 13){
-      console.log("oN CHAT SUBMIT")
-      this.props.onNewChat({
-        type: "incomingMessage",
-        username: this.state.username, 
-        content: this.state.content})
-      event.target.value = "";
+    if(event.keyCode == 13) {
+      if(event.target.value.length === 0) {
+        return null;
+      } else {
+        this.props.onNewChat({
+          type: "incomingMessage",
+          username: this.state.username, 
+          content: this.state.content})
+        event.target.value = "";
+      }
     }
   }
 
