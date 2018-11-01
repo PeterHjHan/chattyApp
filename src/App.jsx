@@ -22,6 +22,7 @@ class App extends Component {
 
     this.socket.onopen = (event) => {
       console.log('Connected to server')
+      console.log("WHAT IS THIS", event);
     }
     this.recieveMessageFromServer();
     
@@ -48,7 +49,6 @@ class App extends Component {
         oldUserName: this.state.currentUser.name,
         content : message
       }
-
       const messageFromServer = this.state.messages.concat(data)
       this.setState({messages: messageFromServer})
     }
