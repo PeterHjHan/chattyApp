@@ -22,27 +22,11 @@ class App extends Component {
 
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
-    this.recieveMessageFromServe = this.recieveMessageFromServe.bind(this);
+    this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
   }
 
 
-  recieveMessageFromServe() {
-    this.socket.onmessage = function(event) {
-      console.log(event.data);
 
-      const messageData = JSON.parse(event.data);
-      const userId = messageData.id;
-      const username = messageData.username;
-      const message = messageData.message;
-  
-      var data = {
-        id: userId,
-        username: username,
-        message : message
-      }
-      console.log("FROMSERVER", data)
-    }
-  }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
@@ -57,6 +41,7 @@ class App extends Component {
   }
   
   addMessage(content) {
+
     const updatedMessages = this.state.messages.concat(content);
 
     this.setState({messages: updatedMessages}, () => {       
@@ -64,23 +49,36 @@ class App extends Component {
         user: this.state.currentUser.name,
         message: this.state.messages[this.state.messages.length-1].content,
       }
-      this.socket.send(JSON.stringify(data));
-    })
+      this.socket.send(JSON.stringify(data))
+      });
+    }
+  
 
-    
-    
+  recieveMessageFromServer() {
+    this.socket.onmessage = function(event) {
+      const messageData = JSON.parse(event.data);
+      const userId = messageData.id;
+      const username = messageData.username;
+      const message = messageData.message;
+      var data = {
+        id: userId,
+        username: username,
+        content : message
+      }
+      return data
+    }
   }
+
   
   render() {
-    this.recieveMessageFromServe();
     if(this.state.loading){
       return <h1 className="loading">Loading...</h1>
     }
     return (
       <div>
         <NavBar/>
-        <MessageList messages = {this.state.messages} />
-        <ChatBar currentUser = {this.state.currentUser} onNewChat ={this.addMessage}/>
+        <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} />
+        <ChatBar currentUser = {this.state.currentUser} onNewChat ={this.addMessage} />
       </div>
     );
   }
