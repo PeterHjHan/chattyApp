@@ -15,7 +15,8 @@ class ChatBar extends Component{
       error:""
     }
     this.getChatText = this.getChatText.bind(this);
-    this.onSubmit = this.onSubmit.bind(this); 
+    this.onChatSubmit = this.onChatSubmit.bind(this);
+    this.getUserName = this.getUserName.bind(this); 
   };
 
   getChatText(event) {
@@ -32,10 +33,21 @@ class ChatBar extends Component{
     }
   }
 
+  getUserName(event) {
+    this.setState({username: event.target.value})
+  }
+
+  onUserNameSubmit(event) {
+    if(event.keyCode == 13){
+      this.setState({username: event.target.value})
+    }
+  }
+
+
   //TODO: Bug where typing enter creates new same chat even though value shows nothing;
   //TODO: Error handling
 
-  onSubmit(event) {
+  onChatSubmit(event) {
     if(event.keyCode == 13){
       this.props.onNewChat({
         id: randomId(), 
@@ -44,16 +56,25 @@ class ChatBar extends Component{
       event.target.value = "";
     }
   }
+
+  onSubmit(event) {
+    console.log(event);
+
+  }
+
+
   
   render() {
 
     return (
 
+      <form onSubmit ={this.onSubmit}>
       <footer className="chatbar">
-        <input className="chatbar-username" placeholder={this.props.currentUser.name} />
+        <input className="chatbar-username" placeholder={this.state.user} onChange ={this.getUserName} onKeyUp = {this.onUserNameSubmit} name="username"/>
         <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange={this.getChatText}
-        onKeyUp ={this.onSubmit}/>
+        onKeyUp ={this.onChatSubmit} name="chatContent"/>
       </footer>
+      </form>
     )
   }
 }

@@ -15,14 +15,14 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {name: "Bob"}, 
+      currentUser: {name: ""}, 
       messages : [],
       loading: true,
     }
 
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
-    // this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
+    this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +31,17 @@ class App extends Component {
     this.socket.onopen = (event) => {
       console.log('Connected to server')
     }
+    this.recieveMessageFromServer();
+    
+    
+    setTimeout(()=> {
+      this.setState({loading:false})
+    },500)
+  }
+
+
+  
+  recieveMessageFromServer() {
     this.socket.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
       const userId = messageData.id;
@@ -45,19 +56,7 @@ class App extends Component {
       const messageFromServer = this.state.messages.concat(data)
       this.setState({messages: messageFromServer})
     }
-    
-    
-    setTimeout(()=> {
-      this.setState({loading:false})
-    },500)
   }
-  
-  // recieveMessageFromServer() {
-  //   let message1 = this;
-  //   this.socket.onmessage = function(event) {
-
-  //   }
-  // }
 
   addMessage(content) {
 
