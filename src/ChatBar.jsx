@@ -11,7 +11,7 @@ class ChatBar extends Component{
     super(prop)
     this.state = {
       id: 3,
-      username: "",
+      username: "Annoynmous",
       content: "",
       error:""
     }
@@ -27,7 +27,7 @@ class ChatBar extends Component{
 
   getUserName(event) {
     if(event.target.value.length === 0) {
-      this.setState({username: "Mysterious"})
+      this.setState({username})
     } else {
       this.setState({username: event.target.value})
     }

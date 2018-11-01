@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {name: ""}, 
+      currentUser: {name: "BOB"}, 
       messages : [],
       loading: true,
     }
@@ -39,8 +39,6 @@ class App extends Component {
     },500)
   }
 
-
-  
   recieveMessageFromServer() {
     this.socket.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
@@ -59,16 +57,16 @@ class App extends Component {
   }
 
   addMessage(content) {
-
     const updatedMessages = this.state.messages.concat(content);
-
-    this.setState({messages: updatedMessages}, () => {   
-
-      var messageData = {
-        user: this.state.currentUser.name,
-        message: this.state.messages[this.state.messages.length-1].content,
-      }
-      this.socket.send(JSON.stringify(messageData))
+    const user = this.state.currentUser.name
+    
+    this.setState({messages: updatedMessages,
+      user: content.username, }, () => {   
+        var messageData = {
+          user: this.state.messages[this.state.messages.length-1].username,
+          message: this.state.messages[this.state.messages.length-1].content,
+        }
+        this.socket.send(JSON.stringify(messageData))
     });
   }
 
@@ -83,7 +81,7 @@ class App extends Component {
       <div>
         <NavBar/>
         <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} />
-        <ChatBar currentUser = {this.state.currentUser} onNewChat ={this.addMessage} />
+        <ChatBar currentUser = {this.getUser} onNewChat ={this.addMessage} />
       </div>
     );
   }
