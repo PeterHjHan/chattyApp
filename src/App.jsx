@@ -10,11 +10,11 @@ class App extends Component {
       currentUser: {name: ""}, 
       messages : [],
       loading: true,
+      userCount: 0,
     }
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
     this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
-    this.getUserCount = this.getUserCount.bind(this);
   }
 
   componentDidMount() {
@@ -22,8 +22,9 @@ class App extends Component {
 
     this.socket.onopen = (event) => {
       console.log('Connected to server')
-      console.log("WHAT IS THIS", event);
     }
+    
+    
     this.recieveMessageFromServer();
     
     setTimeout(()=> {
@@ -31,51 +32,46 @@ class App extends Component {
     },500)
   }
 
-  getUserCount() {
-
-  }
-
   recieveMessageFromServer() {
+
     this.socket.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
       const userId = messageData.id;
       const username = messageData.username;
       const message = messageData.content;
       const type = messageData.type;
+      const userCount = messageData.userCount
+
       var data = {
         id: userId,
         type: type,
         username: username,
         oldUserName: this.state.currentUser.name,
-        content : message
+        content : message,
+        
       }
+    
+      this.setState({userCount: userCount})      
       const messageFromServer = this.state.messages.concat(data)
       this.setState({messages: messageFromServer})
     }
   }
 
   addMessage(content) {
+    var messageData = {
+      type: content.type,
+      user: content.username,
+      message: content.content,
+    }
 
-    this.setState({
-
-    }, () => {   
-
-        var messageData = {
-          type: content.type,
-          user: content.username,
-          message: content.content,
-
-        }
-
-        switch (content.type) {
-          case "incomingMessage" :
-            messageData.type = "postChat"
-            break;
-          case "incomingNotification" :
-            messageData.type = "postNotification"
-        }
-        this.socket.send(JSON.stringify(messageData))
-    });
+    switch (content.type) {
+      case "incomingMessage" :
+        messageData.type = "postChat"
+        break;
+      case "incomingNotification" :
+        messageData.type = "postNotification"
+    }
+    this.socket.send(JSON.stringify(messageData))
   }
 
   render() {
@@ -85,7 +81,7 @@ class App extends Component {
     }
     return (
       <div>
-        <NavBar userCount = {this.getUserCount}/>
+        <NavBar userCount = {this.state.userCount}/>
         <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} />
         <ChatBar currentUser = {this.getUser} onNewChat ={this.addMessage} />
       </div>
