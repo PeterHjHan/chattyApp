@@ -36,13 +36,14 @@ class ChatBar extends Component{
 
   onUserNameSubmit(event) {
     if(event.keyCode == 13){
+      console.log("on NAME SUBMIT")
       if(event.target.value.length === 0) {
-        this.setState({
+        this.props.onNewChat({
           username: "Mysterious",
           type: "incomingNotification",
         })
       } else {
-        this.setState({
+        this.props.onNewChat({
           username: event.target.value,
           type: "incomingNotification",
         })
@@ -66,6 +67,7 @@ class ChatBar extends Component{
 
   onChatSubmit(event) {
     if(event.keyCode == 13){
+      console.log("oN CHAT SUBMIT")
       this.props.onNewChat({
         type: "incomingMessage",
         username: this.state.username, 
