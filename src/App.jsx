@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {name: ""}, 
+      currentUser: {name: "Peter"}, 
       messages : [],
       loading: true,
       userCount: 0,
@@ -15,6 +15,7 @@ class App extends Component {
     this.addMessage = this.addMessage.bind(this);
     this.socket = new WebSocket("ws://localhost:3001");
     this.recieveMessageFromServer = this.recieveMessageFromServer.bind(this);
+    this.setOldUserName = this.setOldUserName.bind(this);
   }
 
   componentDidMount() {
@@ -58,13 +59,16 @@ class App extends Component {
     }
   }
 
+  setOldUserName() {
+
+  }
+
   addMessage(content) {
     var messageData = {
       type: content.type,
       user: content.username,
       message: content.content,
     }
-
     switch (content.type) {
       case "incomingMessage" :
         messageData.type = "postChat"
@@ -83,8 +87,9 @@ class App extends Component {
     return (
       <div>
         <NavBar userCount = {this.state.userCount}/>
-        <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} />
-        <ChatBar currentUser = {this.getUser} onNewChat ={this.addMessage} />
+        <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} 
+        userName = {this.state.currentUser.name} />
+        <ChatBar currentUser = {this.setOldUserName} onNewChat ={this.addMessage} />
       </div>
     );
   }
