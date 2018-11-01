@@ -68,23 +68,19 @@ class App extends Component {
       user: content.username, 
     }, () => {   
 
-      console.log("BEFORE", content);
-
         var messageData = {
           type: content.type,
           user: this.state.messages[this.state.messages.length-1].username,
           message: this.state.messages[this.state.messages.length-1].content,
         }
 
-        console.log("AFTER", messageData);
-
-        // switch (content.type) {
-        //   case "incomingMessage" :
-        //     messageData.type = "postChat"
-        //     break;
-        //   case "incomingNotification" :
-        //     messageData.type = "postNotification"
-        // }
+        switch (content.type) {
+          case "incomingMessage" :
+            messageData.type = "postChat"
+            break;
+          case "incomingNotification" :
+            messageData.type = "postNotification"
+        }
 
         this.socket.send(JSON.stringify(messageData))
     });
