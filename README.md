@@ -19,4 +19,6 @@ Chatty App is a real-time chatting web application using WebSockets and React.
 
 * The ports of the Chatty App Server must be different from the main application
 
-# Screenshots
+### Screenshots
+
+[Chatt App](chattyApp/build/chatty_app_main.png)
