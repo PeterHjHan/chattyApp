@@ -58,7 +58,6 @@ class App extends Component {
       this.setState({messages: messageFromServer})
     }
   }
-
   setOldUserName(content) {
     const previousUserName = content.username
     this.setState({currentUser: previousUserName})
@@ -82,15 +81,21 @@ class App extends Component {
   }
 
   render() {
+
     if(this.state.loading){
       return <h1 className="loading">Loading...</h1>
     }
     return (
       <div>
-        <NavBar userCount = {this.state.userCount}/>
-        <MessageList messages = {this.state.messages} showUpdateChat = {this.recieveMessageFromServer} 
-        userName = {this.state.currentUser} />
-        <ChatBar currentUser = {this.setOldUserName} onNewChat ={this.addMessage} />
+        <NavBar 
+          userCount = {this.state.userCount}/>
+        <MessageList 
+          messages = {this.state.messages} 
+          showUpdateChat = {this.recieveMessageFromServer} 
+          userName = {this.state.currentUser} />
+        <ChatBar 
+          currentUser = {this.setOldUserName} 
+          onNewChat ={this.addMessage} />
       </div>
     );
   }
