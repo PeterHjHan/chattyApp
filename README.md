@@ -12,7 +12,7 @@ Chatty App is a real-time chatting web application using WebSockets and React.
 ### Getting Started
 
 1. Clone both this repo and the [Chatty App Server](https://github.com/PeterHjHan/chattyApp_server) 
-2. Follow the instructions on the Chatty App Server file
+2. Follow the instructions on the Chatty App Server repo first
 3. npm install
 4. Start the application by typing `npm start`
 5. Port is set default to 3000,
